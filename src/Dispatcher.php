@@ -541,6 +541,10 @@ class Dispatcher
             $response = $this->router->dispatch($request);
 
             if (! $response->isSuccessful() && ! $response->isRedirection()) {
+                $message = null;
+				if (isset($response->getOriginalContent()['message'])) {
+					$message = $response->getOriginalContent()['message'];
+				}
                 throw new InternalHttpException($response);
             }
 
